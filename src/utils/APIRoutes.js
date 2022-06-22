@@ -1,8 +1,14 @@
-export const host = 'http://localhost:5000';
-export const loginRoute = `${process.env.HOST}/api/auth/login`;
-export const registerRoute = `${process.env.HOST}/api/auth/register`;
-export const logoutRoute = `${process.env.HOST}/api/auth/logout`;
-export const allUsersRoute = `${process.env.HOST}/api/auth/allusers`;
-export const sendMessageRoute = `${process.env.HOST}/api/messages/addmsg`;
-export const recieveMessageRoute = `${process.env.HOST}/api/messages/getmsg`;
-export const setAvatarRoute = `${process.env.HOST}/api/auth/setavatar`;
+export const host = () => {
+  let hostvar =
+    process.env.environment == 'prod'
+      ? 'https://chat-area-server.herokuapp.com/'
+      : 'http://localhost:5000';
+  return hostvar;
+};
+export const loginRoute = `${host()}/api/auth/login`;
+export const registerRoute = `${host()}/api/auth/register`;
+export const logoutRoute = `${host()}/api/auth/logout`;
+export const allUsersRoute = `${host()}/api/auth/allusers`;
+export const sendMessageRoute = `${host()}/api/messages/addmsg`;
+export const recieveMessageRoute = `${host()}/api/messages/getmsg`;
+export const setAvatarRoute = `${host()}/api/auth/setavatar`;
