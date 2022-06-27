@@ -1,15 +1,25 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import ChatInput from "./ChatInput";
-import Logout from "./Logout";
-import { v4 as uuidv4 } from "uuid";
-import axios from "axios";
-import { sendMessageRoute, recieveMessageRoute } from "../utils/APIRoutes";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import ChatInput from './ChatInput';
+import Logout from './Logout';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { sendMessageRoute, recieveMessageRoute } from '../utils/APIRoutes';
+import { ToastContainer, toast } from 'react-toastify';
+import MediaQuery from 'react-responsive';
+import { IoIosArrowDropleft } from 'react-icons/io';
 
-export default function ChatContainer({ currentChat, socket }) {
+export default function ChatContainer({ currentChat, socket, toggleChange }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const toastOptions = {
+    position: 'bottom-right',
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: 'light',
+  };
 
   useEffect(async () => {
     const data = await JSON.parse(
@@ -37,9 +47,10 @@ export default function ChatContainer({ currentChat, socket }) {
     const data = await JSON.parse(
       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
     );
-    socket.current.emit("send-msg", {
+    socket.current.emit('send-msg', {
       to: currentChat._id,
       from: data._id,
+      sendername: data.username,
       msg,
     });
     await axios.post(sendMessageRoute, {
@@ -55,46 +66,59 @@ export default function ChatContainer({ currentChat, socket }) {
 
   useEffect(() => {
     if (socket.current) {
-      socket.current.on("msg-recieve", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
+      socket.current.on('msg-recieve', (data) => {
+        setArrivalMessage({ fromSelf: false, message: data.msg, data: data });
       });
     }
   }, []);
 
   useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    if (currentChat?._id == arrivalMessage?.data?.from) {
+      arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    } else if (arrivalMessage?.data?.sendername) {
+      toast('Messages from ' + arrivalMessage?.data?.sendername, toastOptions);
+    }
   }, [arrivalMessage]);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  const changeCurrentChat = () => {
+    console.log('button clicked');
+    toggleChange();
+  };
   return (
     <Container>
-      <div className="chat-header">
-        <div className="user-details">
-          <div className="avatar">
+      <div className='chat-header'>
+        <div className='user-details'>
+          <MediaQuery maxWidth={600}>
+            <Button onClick={() => changeCurrentChat()}>
+              <IoIosArrowDropleft />
+            </Button>
+          </MediaQuery>
+          <div className='avatar'>
             <img
               src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
-              alt=""
+              alt=''
             />
           </div>
-          <div className="username">
+          <div className='username'>
             <h3>{currentChat.username}</h3>
           </div>
         </div>
         <Logout />
       </div>
-      <div className="chat-messages">
+      <div className='chat-messages'>
         {messages.map((message) => {
           return (
             <div ref={scrollRef} key={uuidv4()}>
               <div
                 className={`message ${
-                  message.fromSelf ? "sended" : "recieved"
+                  message.fromSelf ? 'sended' : 'recieved'
                 }`}
               >
-                <div className="content ">
+                <div className='content '>
                   <p>{message.message}</p>
                 </div>
               </div>
@@ -103,6 +127,7 @@ export default function ChatContainer({ currentChat, socket }) {
         })}
       </div>
       <ChatInput handleSendMsg={handleSendMsg} />
+      <ToastContainer />
     </Container>
   );
 }
@@ -116,6 +141,7 @@ const Container = styled.div`
     grid-template-rows: 15% 70% 15%;
   }
   .chat-header {
+    background: linear-gradient(rgb(78 57 216), rgb(216 9 177 / 40%));
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -132,6 +158,16 @@ const Container = styled.div`
       .username {
         h3 {
           color: white;
+        }
+      }
+      @media screen and (max-width: 600px) {
+        .username {
+          overflow-x: hidden;
+
+          h3 {
+            color: white;
+            width: 100px;
+          }
         }
       }
     }
@@ -168,14 +204,46 @@ const Container = styled.div`
     .sended {
       justify-content: flex-end;
       .content {
-        background-color: #4f04ff21;
+        /* background-color: #4f04ff21; */
+        /* background: linear-gradient(
+          rgb(99 134 222 / 73%),
+          rgb(22 42 160 / 92%)
+        ); */
+        background: #007aff;
       }
     }
     .recieved {
       justify-content: flex-start;
       .content {
-        background-color: #9900ff20;
+        /* background-color: #9900ff20; */
+        background: linear-gradient(
+          rgb(235 61 222 / 85%),
+          rgb(207 27 85 / 88%)
+        );
       }
     }
+    .Toastify .Toastify__toast-theme--light {
+      color: black;
+    }
   }
+`;
+
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  /* background-color: #9a86f3; */
+  background: #007aff;
+  border: none;
+  cursor: pointer;
+  svg {
+    font-size: 1.3rem;
+    color: #ebe7ff;
+  }
+  :hover {
+  }
+  float: left;
+  margin: 0.5rem;
 `;

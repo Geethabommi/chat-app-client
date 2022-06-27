@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Logo from "../assets/logo.svg";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Logo from '../assets/logo.svg';
+import Comments from '../assets/comments.svg';
+import Logout from './Logout';
+import MediaQuery from 'react-responsive';
 
-export default function Contacts({ contacts, changeChat }) {
+export default function Contacts({ contacts, changeChat, toggleChange }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
@@ -16,48 +19,53 @@ export default function Contacts({ contacts, changeChat }) {
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
     changeChat(contact);
+    toggleChange();
   };
   return (
     <>
       {currentUserImage && currentUserImage && (
         <Container>
-          <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h3>snappy</h3>
+          <div className='brand'>
+            <img src={Comments} alt='logo' />
+            <h3>chat Area</h3>
           </div>
-          <div className="contacts">
+          <div className='contacts'>
             {contacts.map((contact, index) => {
               return (
                 <div
                   key={contact._id}
                   className={`contact ${
-                    index === currentSelected ? "selected" : ""
+                    index === currentSelected ? 'selected' : ''
                   }`}
                   onClick={() => changeCurrentChat(index, contact)}
                 >
-                  <div className="avatar">
+                  <div className='avatar'>
                     <img
                       src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-                      alt=""
+                      alt=''
                     />
                   </div>
-                  <div className="username">
+                  <div className='username'>
                     <h3>{contact.username}</h3>
                   </div>
                 </div>
               );
             })}
           </div>
-          <div className="current-user">
-            <div className="avatar">
+
+          <div className='current-user'>
+            <div className='avatar'>
               <img
                 src={`data:image/svg+xml;base64,${currentUserImage}`}
-                alt="avatar"
+                alt='avatar'
               />
             </div>
-            <div className="username">
+            <div className='username'>
               <h2>{currentUserName}</h2>
             </div>
+            <MediaQuery maxWidth={600}>
+              <Logout />
+            </MediaQuery>
           </div>
         </Container>
       )}
@@ -119,12 +127,14 @@ const Container = styled.div`
       }
     }
     .selected {
-      background-color: #9a86f3;
+      /* background-color: #9a86f3; */
+      background: #007aff;
     }
   }
 
   .current-user {
-    background-color: #0d0d30;
+    /* background-color: #0d0d30; */
+    background: linear-gradient(rgb(78 57 216), rgb(216 9 177 / 40%));
     display: flex;
     justify-content: center;
     align-items: center;

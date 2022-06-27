@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { loginRoute } from "../utils/APIRoutes";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import { useNavigate, Link } from 'react-router-dom';
+import Logo from '../assets/logo.svg';
+import Comments from '../assets/comments.svg';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { loginRoute } from '../utils/APIRoutes';
 
 export default function Login() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({ username: "", password: "" });
+  const [values, setValues] = useState({ username: '', password: '' });
   const toastOptions = {
-    position: "bottom-right",
+    position: 'bottom-right',
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "dark",
+    theme: 'dark',
   };
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-      navigate("/");
+      navigate('/');
     }
   }, []);
 
@@ -29,11 +30,11 @@ export default function Login() {
 
   const validateForm = () => {
     const { username, password } = values;
-    if (username === "") {
-      toast.error("Email and Password is required.", toastOptions);
+    if (username === '') {
+      toast.error('Email and Password is required.', toastOptions);
       return false;
-    } else if (password === "") {
-      toast.error("Email and Password is required.", toastOptions);
+    } else if (password === '') {
+      toast.error('Email and Password is required.', toastOptions);
       return false;
     }
     return true;
@@ -56,7 +57,7 @@ export default function Login() {
           JSON.stringify(data.user)
         );
 
-        navigate("/");
+        navigate('/');
       }
     }
   };
@@ -64,27 +65,35 @@ export default function Login() {
   return (
     <>
       <FormContainer>
-        <form action="" onSubmit={(event) => handleSubmit(event)}>
-          <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+        <form
+          action=''
+          onSubmit={(event) => handleSubmit(event)}
+          autocomplete='off'
+        >
+          <div className='brand'>
+            <img src={Comments} alt='logo' />
+            <h1>chat Area</h1>
           </div>
           <input
-            type="text"
-            placeholder="Username"
-            name="username"
+            type='text'
+            placeholder='Username'
+            name='username'
             onChange={(e) => handleChange(e)}
-            min="3"
+            min='3'
+            autocomplete='off'
           />
           <input
-            type="password"
-            placeholder="Password"
-            name="password"
+            id='input2'
+            type='password'
+            placeholder='Password'
+            name='password'
             onChange={(e) => handleChange(e)}
+            autocomplete='off'
+            aria-autocomplete='none'
           />
-          <button type="submit">Log In</button>
+          <button type='submit'>Log In</button>
           <span>
-            Don't have an account ? <Link to="/register">Create One.</Link>
+            Don't have an account ? <Link to='/register'>Create One.</Link>
           </span>
         </form>
       </FormContainer>

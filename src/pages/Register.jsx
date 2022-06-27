@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import { useNavigate, Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { registerRoute } from "../utils/APIRoutes";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import { useNavigate, Link } from 'react-router-dom';
+import Logo from '../assets/logo.svg';
+import Comments from '../assets/comments.svg';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { registerRoute } from '../utils/APIRoutes';
 
 export default function Register() {
   const navigate = useNavigate();
   const toastOptions = {
-    position: "bottom-right",
+    position: 'bottom-right',
     autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "dark",
+    theme: 'dark',
   };
   const [values, setValues] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
   useEffect(() => {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-      navigate("/");
+      navigate('/');
     }
   }, []);
 
@@ -37,24 +38,24 @@ export default function Register() {
     const { password, confirmPassword, username, email } = values;
     if (password !== confirmPassword) {
       toast.error(
-        "Password and confirm password should be same.",
+        'Password and confirm password should be same.',
         toastOptions
       );
       return false;
     } else if (username.length < 3) {
       toast.error(
-        "Username should be greater than 3 characters.",
+        'Username should be greater than 3 characters.',
         toastOptions
       );
       return false;
     } else if (password.length < 8) {
       toast.error(
-        "Password should be equal or greater than 8 characters.",
+        'Password should be equal or greater than 8 characters.',
         toastOptions
       );
       return false;
-    } else if (email === "") {
-      toast.error("Email is required.", toastOptions);
+    } else if (email === '') {
+      toast.error('Email is required.', toastOptions);
       return false;
     }
 
@@ -79,7 +80,7 @@ export default function Register() {
           process.env.REACT_APP_LOCALHOST_KEY,
           JSON.stringify(data.user)
         );
-        navigate("/");
+        navigate('/');
       }
     }
   };
@@ -87,38 +88,46 @@ export default function Register() {
   return (
     <>
       <FormContainer>
-        <form action="" onSubmit={(event) => handleSubmit(event)}>
-          <div className="brand">
-            <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+        <form
+          action=''
+          onSubmit={(event) => handleSubmit(event)}
+          autocomplete='off'
+        >
+          <div className='brand'>
+            <img src={Comments} alt='logo' />
+            <h1>chat Area</h1>
           </div>
           <input
-            type="text"
-            placeholder="Username"
-            name="username"
+            type='text'
+            placeholder='Username'
+            name='username'
             onChange={(e) => handleChange(e)}
+            autocomplete='off'
           />
           <input
-            type="email"
-            placeholder="Email"
-            name="email"
+            type='email'
+            placeholder='Email'
+            name='email'
             onChange={(e) => handleChange(e)}
+            autocomplete='off'
           />
           <input
-            type="password"
-            placeholder="Password"
-            name="password"
+            type='password'
+            placeholder='Password'
+            name='password'
             onChange={(e) => handleChange(e)}
+            autocomplete='off'
           />
           <input
-            type="password"
-            placeholder="Confirm Password"
-            name="confirmPassword"
+            type='password'
+            placeholder='Confirm Password'
+            name='confirmPassword'
             onChange={(e) => handleChange(e)}
+            autocomplete='off'
           />
-          <button type="submit">Create User</button>
+          <button type='submit'>Create User</button>
           <span>
-            Already have an account ? <Link to="/login">Login.</Link>
+            Already have an account ? <Link to='/login'>Login.</Link>
           </span>
         </form>
       </FormContainer>

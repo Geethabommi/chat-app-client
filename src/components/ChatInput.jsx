@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { BsEmojiSmileFill } from "react-icons/bs";
-import { IoMdSend } from "react-icons/io";
-import styled from "styled-components";
-import Picker from "emoji-picker-react";
+import React, { useState } from 'react';
+import { BsEmojiSmileFill } from 'react-icons/bs';
+import { IoMdSend } from 'react-icons/io';
+import styled from 'styled-components';
+import Picker from 'emoji-picker-react';
 
 export default function ChatInput({ handleSendMsg }) {
-  const [msg, setMsg] = useState("");
+  const [msg, setMsg] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const handleEmojiPickerhideShow = () => {
     setShowEmojiPicker(!showEmojiPicker);
@@ -21,26 +21,26 @@ export default function ChatInput({ handleSendMsg }) {
     event.preventDefault();
     if (msg.length > 0) {
       handleSendMsg(msg);
-      setMsg("");
+      setMsg('');
     }
   };
 
   return (
     <Container>
-      <div className="button-container">
-        <div className="emoji">
+      <div className='button-container'>
+        <div className='emoji'>
           <BsEmojiSmileFill onClick={handleEmojiPickerhideShow} />
           {showEmojiPicker && <Picker onEmojiClick={handleEmojiClick} />}
         </div>
       </div>
-      <form className="input-container" onSubmit={(event) => sendChat(event)}>
+      <form className='input-container' onSubmit={(event) => sendChat(event)}>
         <input
-          type="text"
-          placeholder="type your message here"
+          type='text'
+          placeholder='type your message here'
           onChange={(e) => setMsg(e.target.value)}
           value={msg}
         />
-        <button type="submit">
+        <button type='submit'>
           <IoMdSend />
         </button>
       </form>
@@ -54,6 +54,10 @@ const Container = styled.div`
   grid-template-columns: 5% 95%;
   background-color: #080420;
   padding: 0 2rem;
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 10% 95%;
+    padding: 0 1.5rem 0 0.5rem;
+  }
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0 1rem;
     gap: 1rem;
@@ -127,7 +131,8 @@ const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #9a86f3;
+      /* background-color: #9a86f3; */
+      background: #007aff;
       border: none;
       @media screen and (min-width: 720px) and (max-width: 1080px) {
         padding: 0.3rem 1rem;
