@@ -114,10 +114,12 @@ const FormContainer = styled.div`
   .brand {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    /* gap: 1rem; */
     justify-content: center;
+    margin-bottom: 2rem;
     img {
       height: 5rem;
+      margin-right: 1rem;
     }
     h1 {
       color: white;
@@ -128,7 +130,7 @@ const FormContainer = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    /* gap: 2rem; */
     background-color: #00000076;
     border-radius: 2rem;
     padding: 5rem;
@@ -141,6 +143,7 @@ const FormContainer = styled.div`
     color: white;
     width: 100%;
     font-size: 1rem;
+    margin-bottom: 2rem;
     &:focus {
       border: 0.1rem solid #997af0;
       outline: none;
@@ -156,6 +159,7 @@ const FormContainer = styled.div`
     border-radius: 0.4rem;
     font-size: 1rem;
     text-transform: uppercase;
+    margin-bottom: 2rem;
     &:hover {
       background-color: #4e0eff;
     }

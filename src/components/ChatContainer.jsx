@@ -112,7 +112,7 @@ export default function ChatContainer({ currentChat, socket, toggleChange }) {
       <div className='chat-messages'>
         {messages.map((message) => {
           return (
-            <div ref={scrollRef} key={uuidv4()}>
+            <div ref={scrollRef} key={uuidv4()} className='chatmsgwrapper'>
               <div
                 className={`message ${
                   message.fromSelf ? 'sended' : 'recieved'
@@ -137,6 +137,9 @@ const Container = styled.div`
   grid-template-rows: 10% 80% 10%;
   gap: 0.1rem;
   overflow: hidden;
+  @media screen and (max-width: 600px) {
+    overflow: scroll;
+  }
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     grid-template-rows: 15% 70% 15%;
   }
@@ -149,13 +152,15 @@ const Container = styled.div`
     .user-details {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      /* gap: 1rem; */
       .avatar {
+        margin-right: 1rem;
         img {
           height: 3rem;
         }
       }
       .username {
+        margin-right: 1rem;
         h3 {
           color: white;
         }
@@ -176,7 +181,7 @@ const Container = styled.div`
     padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    /* gap: 1rem; */
     overflow: auto;
     &::-webkit-scrollbar {
       width: 0.2rem;
@@ -185,6 +190,9 @@ const Container = styled.div`
         width: 0.1rem;
         border-radius: 1rem;
       }
+    }
+    .chatmsgwrapper {
+      margin-bottom: 1rem;
     }
     .message {
       display: flex;
@@ -237,6 +245,7 @@ const Button = styled.button`
   /* background-color: #9a86f3; */
   background: #007aff;
   border: none;
+  /* margin-right: 1rem; */
   cursor: pointer;
   svg {
     font-size: 1.3rem;

@@ -76,14 +76,18 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: 10% 75% 15%;
   overflow: hidden;
+  @media screen and (max-width: 600px) {
+    overflow: scroll;
+  }
   background-color: #080420;
   .brand {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    /* gap: 1rem; */
     justify-content: center;
     img {
       height: 2rem;
+      margin-right: 1rem;
     }
     h3 {
       color: white;
@@ -95,7 +99,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     overflow: auto;
-    gap: 0.8rem;
+    /* gap: 0.8rem; */
     &::-webkit-scrollbar {
       width: 0.2rem;
       &-thumb {
@@ -112,12 +116,14 @@ const Container = styled.div`
       border-radius: 0.2rem;
       padding: 0.4rem;
       display: flex;
-      gap: 1rem;
+      /* gap: 1rem; */
       align-items: center;
       transition: 0.5s ease-in-out;
+      margin-bottom: 0.8rem;
       .avatar {
         img {
           height: 3rem;
+          margin-right: 1rem;
         }
       }
       .username {
@@ -138,20 +144,25 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
+    /* gap: 2rem; */
     .avatar {
+      margin-right: 2rem;
       img {
         height: 4rem;
         max-inline-size: 100%;
       }
     }
     .username {
+      margin-right: 2rem;
       h2 {
         color: white;
       }
     }
     @media screen and (min-width: 720px) and (max-width: 1080px) {
-      gap: 0.5rem;
+      /* gap: 0.5rem; */
+      .avatar {
+        margin-right: 0.6rem;
+      }
       .username {
         h2 {
           font-size: 1rem;

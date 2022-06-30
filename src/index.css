@@ -29,3 +29,7 @@ body {
 .collapse.in {
   display: block;
 }
+
+.gap-bottom {
+  margin-bottom: 1rem;
+}

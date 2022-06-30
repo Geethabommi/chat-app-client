@@ -60,14 +60,17 @@ const Container = styled.div`
   }
   @media screen and (min-width: 720px) and (max-width: 1080px) {
     padding: 0 1rem;
-    gap: 1rem;
+    /* gap: 1rem; */
+    margin-right: 1rem;
   }
   .button-container {
     display: flex;
     align-items: center;
     color: white;
+    margin-right: 1rem;
     gap: 1rem;
     .emoji {
+      /* margin-right: 1rem; */
       position: relative;
       svg {
         font-size: 1.5rem;
@@ -107,7 +110,7 @@ const Container = styled.div`
     border-radius: 2rem;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    /* gap: 2rem; */
     background-color: #ffffff34;
     input {
       width: 90%;
@@ -117,7 +120,7 @@ const Container = styled.div`
       border: none;
       padding-left: 1rem;
       font-size: 1.2rem;
-
+      margin-right: 2rem;
       &::selection {
         background-color: #9a86f3;
       }
