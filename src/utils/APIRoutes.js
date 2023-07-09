@@ -3,7 +3,7 @@ export const host = () => {
   let hostvar =
     process.env.REACT_APP_ENV == 'development'
       ? 'http://localhost:5000'
-      : 'https://chat-area-server.herokuapp.com';
+      :  process.env.REACT_APP_HOST_NAME;
   return hostvar;
 };
 export const loginRoute = `${host()}/api/auth/login`;
