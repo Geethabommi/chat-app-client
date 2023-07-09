@@ -3,7 +3,7 @@ export const host = () => {
   let hostvar =
     process.env.REACT_APP_ENV == 'development'
       ? 'http://localhost:5000'
-      :  process.env.REACT_APP_HOST_NAME;
+      :  'https://chatarea-app-server.onrender.com';
   return hostvar;
 };
 export const loginRoute = `${host()}/api/auth/login`;
